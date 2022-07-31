@@ -1,0 +1,103 @@
+{
+  "name": "@teakit/atom",
+  "version": "0.1.0",
+  "description": "An Expressive HTTP framework for Node.js",
+  "prettier": "prettier-config-whatskit",
+  "author": "Billgo <hi@billgo.me>",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "exports": {
+    ".": {
+      "require": "./lib/index.js",
+      "import": "./dist/atom.mjs"
+    },
+    "./*": "./*.js",
+    "./*.js": "./*.js",
+    "./package": "./package.json",
+    "./package.json": "./package.json"
+  },
+  "directories": {
+    "dist": "dist",
+    "lib": "lib"
+  },
+  "files": [
+    "dist",
+    "lib"
+  ],
+  "scripts": {
+    "clean": "rimraf coverage build tmp dist",
+    "compile": "npm run clean && npm run build -- --dts-resolve",
+    "prepublishOnly": "npm run build:esm",
+    "prebuild": "npm run lint",
+    "build": "tsup src/index.ts --format cjs,esm",
+    "build:watch": "tsup src src/index.ts --watch",
+    "build:esm": "gen-esm-wrapper . ./dist/atom.mjs",
+    "prettier": "prettier --config .prettierrc --write .",
+    "lint": "eslint --ext .ts --ext .mts",
+    "test": "jest --forceExit",
+    "test:watch": "jest --watch"
+  },
+  "dependencies": {
+    "accepts": "^1.3.8",
+    "cache-content-type": "^1.0.1",
+    "content-disposition": "~0.5.4",
+    "content-type": "^1.0.4",
+    "cookies": "~0.8.0",
+    "debug": "^4.3.4",
+    "delegates": "^1.0.0",
+    "destroy": "^1.2.0",
+    "encodeurl": "^1.0.2",
+    "escape-html": "^1.0.3",
+    "fresh": "~0.5.2",
+    "http-assert": "^1.5.0",
+    "http-errors": "^1.6.3",
+    "on-finished": "^2.4.1",
+    "only": "~0.0.2",
+    "parseurl": "^1.3.3",
+    "statuses": "^1.5.0",
+    "type-is": "^1.6.18",
+    "vary": "^1.1.2"
+  },
+  "devDependencies": {
+    "@types/jest": "^28.1.6",
+    "@types/node": "^18.6.3",
+    "@typescript-eslint/eslint-plugin": "^5.31",
+    "@typescript-eslint/parser": "^5.31",
+    "eslint": "^8.20",
+    "eslint-config-prettier": "^8.5",
+    "eslint-plugin-jest": "^26.7",
+    "gen-esm-wrapper": "^1.1.3",
+    "jest": "^28.1",
+    "prettier": "^2.7",
+    "prettier-config-whatskit": "^0.3.0",
+    "rimraf": "^3.0",
+    "supertest": "^6.2.4",
+    "ts-jest": "^28.0",
+    "tslib": "^2.4",
+    "tsup": "6.2.1",
+    "tsutils": "^3.21",
+    "typescript": "^4.7"
+  },
+  "eslintIgnore": [
+    "/**/*.js",
+    "node_modules/*",
+    "lib/*",
+    "docs/*",
+    "dist/*",
+    "build/*",
+    "coverage/*",
+    "fixtures/*",
+    "types/*",
+    "umd/*"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "volta": {
+    "node": "16.15.0",
+    "yarn": "1.22.19"
+  },
+  "engines": {
+    "node": ">= 16.15"
+  }
+}
